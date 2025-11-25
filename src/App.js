@@ -173,7 +173,7 @@ function App() {
     {
       title: "Data Analysis",
       description: "Master essential tools in data analysis to drive insights and make data-driven decisions in any industry.",
-      price: "$100",
+      price: "$150 (3 months) / $200 (4 months)",
       details: [
         "Course Duration: 3 months",
         "Next Cohort Start Date: January 17, 2024",
@@ -186,7 +186,7 @@ function App() {
     {
       title: "UI/UX Design",
       description: "Develop user-friendly interfaces and improve user experiences with a course in UI/UX design fundamentals and advanced concepts.",
-      price: "$100",
+      price: "$150",
       details: [
         "Course Duration: 3 months",
         "Next Cohort Start Date: January 17, 2024",
@@ -198,7 +198,7 @@ function App() {
     {
       title: "Web Development",
       description: "Learn the essentials of front-end and back-end development to create responsive and interactive websites.",
-      price: "$100",
+      price: "$150",
       details: [
         "Course Duration: 3 months",
         "Next Cohort Start Date: January 17, 2024",
@@ -210,7 +210,7 @@ function App() {
     {
       title: "Graphics Design",
       description: "Transform your creative skills with our graphics design course, perfect for building a professional portfolio.",
-      price: "$100",
+      price: "$150",
       details: [
         "Course Duration: 3 months",
         "Next Cohort Start Date: January 17, 2024",
@@ -222,7 +222,7 @@ function App() {
     {
       title: "Cybersecurity",
       description: "Gain essential skills in cybersecurity, focusing on protecting data, preventing breaches, and understanding cybersecurity principles.",
-      price: "$100",
+      price: "$250",
       details: [
         "Course Duration: 3 months",
         "Next Cohort Start Date: January 17, 2024",
