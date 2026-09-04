@@ -27,7 +27,7 @@ export const social = [
 /** Public Formspree form ID. Both forms post here; `_subject` separates them. */
 export const formEndpoint = 'https://formspree.io/f/xpwzzykn';
 
-export const registrationUrl = 'https://bit.ly/accomplitech_courses_registration';
+export const registrationUrl = 'https://docs.google.com/forms/d/1qUdFXBYbs3jd_UuXvGoEp_RrcdrTPoZPezBfpdlZtJc/viewform';
 
 /**
  * Start date of the next intake, as an ISO date string.

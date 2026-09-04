@@ -315,6 +315,7 @@
 
 .clients__row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: clamp(2rem, 4vw, 3.5rem);
 }
@@ -329,24 +330,9 @@
   object-fit: contain;
 }
 
-/*
- * Redesigned for the breakpoint, not shrunk: five differently-shaped logos
- * wrap onto an uneven second row at narrow widths, so instead they become a
- * horizontal scroller. This is the one deliberate horizontal scroll on the
- * page, and it only exists below 640px.
- */
 @media (max-width: 640px) {
   .clients__row {
-    flex-wrap: nowrap;
-    overflow-x: auto;
     gap: 2rem;
-    padding-bottom: 0.25rem;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
-  }
-
-  .clients__row li {
-    scroll-snap-align: start;
   }
 
   .clients__row img {
