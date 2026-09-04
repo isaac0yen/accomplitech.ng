@@ -24,19 +24,19 @@ export default function FactStrip() {
 
   return (
     <section className="facts" aria-label="Accomplitech in numbers">
-      <dl className="facts__list">
+      <div className="facts__list">
         {facts.map((fact) => (
           <div className="facts__item" key={fact.label}>
             <div className="facts__glyph" aria-hidden="true">
               <Icon name={fact.icon} size={20} className="facts__icon" />
             </div>
-            <div className="facts__body">
-              <dt className="facts__value">{fact.value}</dt>
-              <dd className="facts__label">{fact.label}</dd>
-            </div>
+            <p className="facts__body">
+              <span className="facts__value">{fact.value}</span>{' '}
+              <span className="facts__label">{fact.label}</span>
+            </p>
           </div>
         ))}
-      </dl>
+      </div>
     </section>
   );
 }
