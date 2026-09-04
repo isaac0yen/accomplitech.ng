@@ -1,0 +1,317 @@
+/*
+ * Design tokens, reset and shared primitives.
+ *
+ * Two rules this stylesheet holds to, deliberately:
+ *
+ *  1. No gradients. Not on buttons, not on bands, not as scroll masks. Every
+ *     fill in this codebase is a flat colour. If you need separation, use a
+ *     hairline rule or a change of background, not a fade.
+ *
+ *  2. Structure comes from rules and flat bands, not from a shadow on every
+ *     box. Shadows are reserved for things that genuinely float above the page
+ *     (the mobile nav panel).
+ *
+ * Palette values are sampled from the logo artwork (public/logo-main.png),
+ * which is purple, terracotta and cobalt — not the lavender the old stylesheet
+ * drifted into. Contrast ratios against --paper are noted where they matter.
+ */
+
+:root {
+  /* Surfaces. Warm off-white rather than #fff, warm sand for alternate bands. */
+  --paper: #fcfaf7;
+  --paper-alt: #f4efe9;
+  --paper-sunk: #ece5dc;
+
+  /* Text. */
+  --ink: #1b1420;        /* headings                        17.9:1 on paper */
+  --ink-soft: #4a4152;   /* body copy                        9.3:1 on paper */
+  --ink-faint: #736a7d;  /* meta, captions                   5.0:1 on paper */
+
+  /* Brand. */
+  --purple: #6b0899;      /* primary: links, buttons         9.6:1 on paper */
+  --purple-deep: #4a0669; /* hover / pressed                              */
+  --purple-wash: #f0e6f5; /* the only tinted surface, used sparingly       */
+  --accent: #c75634;      /* terracotta: rules and large display only      */
+  --accent-ink: #a8452a;  /* text-safe terracotta             5.7:1        */
+  --cobalt: #1956a0;
+
+  /* On dark bands. */
+  --ink-band: #1b1420;
+  --on-dark: #fcfaf7;         /* 18:1 on --ink-band */
+  --on-dark-soft: #b8aec2;    /*  8.5:1 on --ink-band */
+  --on-dark-rule: #3a3143;
+
+  --rule: #ddd5cc;
+  --rule-strong: #c4b9ad;
+
+  /* Never a pill. 3px reads as "made of paper", not "made by a template". */
+  --radius: 3px;
+
+  --measure: 62ch;        /* comfortable reading width */
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --band: clamp(3.5rem, 7vw, 6.5rem);   /* vertical rhythm between sections */
+  --max: 1240px;
+  --nav-h: 72px;          /* masthead height; hero subtracts this from 100vh */
+
+  --sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Arial, sans-serif;
+}
+
+/* ---------------------------------------------------------------- reset --- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  /* Sticky header would otherwise cover the top of the target section. */
+  :target {
+    scroll-margin-top: 6rem;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 1.0625rem;   /* 17px. The old stylesheet shipped 22px body copy. */
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--ink);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--purple);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--purple-deep);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ----------------------------------------------------------- primitives --- */
+
+.shell {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Skip link: visible only once focused. */
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: 0;
+  z-index: 200;
+  transform: translateY(-120%);
+  background: var(--ink-band);
+  color: var(--on-dark);
+  padding: 0.7rem 1.1rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  color: var(--on-dark);
+}
+
+/*
+ * Section label. Small caps-ish eyebrow, left aligned, no rule in front of it:
+ * centred everything and little decorative dashes are the fastest way to look
+ * generated.
+ */
+.eyebrow {
+  margin: 0 0 0.6rem;
+  color: var(--accent-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+
+
+.section-title {
+  font-size: clamp(1.65rem, 3.4vw, 2.4rem);
+  max-width: 34ch;
+}
+
+.lede {
+  margin-top: 1rem;
+  max-width: var(--measure);
+  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  color: var(--ink-soft);
+}
+
+/* Buttons: flat fill, square-ish corners, no gradient, no pill. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: var(--purple);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--purple-deep);
+  color: #fff;
+}
+
+.btn:disabled {
+  background: var(--rule-strong);
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.btn--outline {
+  background: transparent;
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.btn--outline:hover:not(:disabled) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.btn--on-dark {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.btn--on-dark:hover:not(:disabled) {
+  background: #fff;
+  color: var(--purple-deep);
+}
+
+/* A text link that behaves like a call to action without becoming a button. */
+.link-arrow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+.link-arrow span:last-child,
+.link-arrow svg {
+  transition: transform 0.15s ease;
+}
+
+.link-arrow:hover span:last-child,
+.link-arrow:hover svg {
+  transform: translateX(3px);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Photograph with a caption underneath. Captions describe the actual frame. */
+.figure {
+  margin: 0;
+}
+
+.figure img {
+  width: 100%;
+  border-radius: var(--radius);
+  background: var(--paper-sunk);
+}
+
+.figure figcaption {
+  margin-top: 0.7rem;
+  color: var(--ink-faint);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  max-width: 46ch;
+}
