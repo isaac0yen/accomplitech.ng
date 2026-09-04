@@ -9,6 +9,7 @@ Move the `cohort-group` image into the hero as a true background treatment with 
 
 ### In Scope
 - Use the `cohort-group` asset family as the hero background source.
+- Serve the highest-definition original hero image instead of the generated WebP variant.
 - Add a dark overlay so the hero copy stays readable on top of the image.
 - Ensure the hero background does not repeat and fills the hero area (`cover`).
 - Make the first screen fit cleanly without an initial page scroll caused by the hero/header combination.
@@ -25,6 +26,7 @@ Move the `cohort-group` image into the hero as a true background treatment with 
 
 ### Acceptance Criteria
 - `Hero` displays the `cohort-group` image behind the copy, with visible text contrast from an overlay.
+- The homepage hero uses the original highest-definition cohort image asset rather than a WebP derivative.
 - The hero image fills the section without tiling and can crop as needed.
 - The landing viewport does not show an unwanted page scroll before the user moves down the page.
 - The masthead is visually transparent on top of the hero and becomes readable against later light sections after scrolling.
@@ -84,6 +86,7 @@ Move the `cohort-group` image into the hero as a true background treatment with 
 
 ### Risks
 - A CSS `background-image` approach can bypass the project’s current responsive `srcSet` image pattern; if that becomes too limiting, an absolutely positioned responsive `<img>` layer inside `Hero.js` is the safer implementation.
+- Serving the original full-resolution asset may increase hero payload size, so the implementation should stay limited to the explicitly requested homepage background.
 - The current `.shell` max width (`1240px`) may make the stats feel less “full-width” than the user expects, so spacing and band treatment need to be chosen carefully.
 - If the overlay is too strong, the image loses impact; if too weak, the headline loses contrast.
 
@@ -147,3 +150,10 @@ Course cards should stay visually even even when summaries, fees and other metad
 - Refine `src/components/Courses.js` only where needed to group metadata and actions more predictably.
 - Rework the `.course*` rules in `src/App.css` to eliminate alternating offsets, stabilize vertical rhythm, and keep footer/action areas aligned across cards.
 - Pay special attention to the fee row so long pricing text wraps cleanly without pushing the rest of the card into inconsistent positions.
+
+### ✓ Step 7: Serve the original high-definition hero image
+The homepage hero should use the highest-definition original cohort image asset instead of the generated WebP output.
+
+- Update the hero image sourcing so `Hero` pulls the original non-WebP cohort asset at the highest available resolution.
+- Keep the existing overlay, cover sizing, and no-repeat behavior unchanged while swapping the asset source.
+- Verify the production build still completes after the hero image source change.

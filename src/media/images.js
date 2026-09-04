@@ -6,16 +6,17 @@
  * adding or dropping a size in that script needs no change in the components.
  */
 
-const context = require.context('./', false, /\.webp$/);
+const webpContext = require.context('./', false, /\.webp$/);
+const rasterContext = require.context('./', false, /\.(avif|jpe?g|png)$/);
 
 /** name -> url, for files with no width suffix (logos, single-size art). */
 const flat = {};
 /** name -> { width: url }, for responsive sets. */
 const sets = {};
 
-context.keys().forEach((key) => {
+webpContext.keys().forEach((key) => {
   const file = key.replace(/^\.\//, '').replace(/\.webp$/, '');
-  const url = context(key);
+  const url = webpContext(key);
   const match = file.match(/^(.*)-(\d+)$/);
 
   flat[file] = url;
@@ -26,10 +27,15 @@ context.keys().forEach((key) => {
   }
 });
 
+rasterContext.keys().forEach((key) => {
+  const file = key.replace(/^\.\//, '').replace(/\.(avif|jpe?g|png)$/, '');
+  flat[file] = rasterContext(key);
+});
+
 /** URL of a single image, e.g. image('client-uba') or image('logo-96'). */
 export function image(name) {
   const url = flat[name];
-  if (!url) throw new Error(`No image "${name}.webp" in src/media`);
+  if (!url) throw new Error(`No image "${name}" in src/media`);
   return url;
 }
 

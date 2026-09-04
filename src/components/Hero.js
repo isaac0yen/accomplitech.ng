@@ -1,6 +1,6 @@
 import React from 'react';
 import { schedule } from '../config/site.config';
-import { responsive } from '../media/images';
+import { image } from '../media/images';
 
 /*
  * First viewport under the sticky masthead, now with the actual cohort photo
@@ -9,16 +9,16 @@ import { responsive } from '../media/images';
 
 export default function Hero() {
   const times = schedule.map((slot) => `${slot.day} ${slot.time}`).join(' · ');
-  const heroImage = responsive('cohort-group', '100vw');
+  const heroImage = image('cohort-group');
 
   return (
     <section className="hero" id="top">
       <div className="hero__media" aria-hidden="true">
         <img
-          {...heroImage}
+          src={heroImage}
           className="hero__image"
-          width="2400"
-          height="926"
+          width="6016"
+          height="4000"
           alt=""
           decoding="async"
           fetchPriority="high"
