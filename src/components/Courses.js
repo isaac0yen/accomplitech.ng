@@ -69,37 +69,41 @@ export default function Courses() {
         <ol className="courses__grid">
           {visibleCourses.map((course) => (
             <li className="course" key={course.id}>
-              <h3 className="course__title">{course.title}</h3>
-              <p className="course__summary">{course.summary}</p>
-              <ul className="tools" aria-label={`${course.title} covers`}>
-                {course.tools.map((tool) => (
-                  <li key={tool}>{tool}</li>
-                ))}
-              </ul>
+              <div className="course__body">
+                <h3 className="course__title">{course.title}</h3>
+                <p className="course__summary">{course.summary}</p>
+                <ul className="tools" aria-label={`${course.title} covers`}>
+                  {course.tools.map((tool) => (
+                    <li key={tool}>{tool}</li>
+                  ))}
+                </ul>
+              </div>
 
-              <dl className="course__meta">
-                <div>
-                  <dt>Length</dt>
-                  <dd>{course.duration}</dd>
-                </div>
-                <div>
-                  <dt>Fee</dt>
-                  <dd className="course__price">{course.price}</dd>
-                </div>
-              </dl>
+              <div className="course__footer">
+                <dl className="course__meta">
+                  <div>
+                    <dt>Length</dt>
+                    <dd>{course.duration}</dd>
+                  </div>
+                  <div>
+                    <dt>Fee</dt>
+                    <dd className="course__price">{course.price}</dd>
+                  </div>
+                </dl>
 
-              <a
-                className="link-arrow course__action"
-                href={registrationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>Register</span>
-                <Icon name="arrowForward" size={16} />
-                <span className="visually-hidden">
-                  for {course.title} (opens in a new tab)
-                </span>
-              </a>
+                <a
+                  className="link-arrow course__action"
+                  href={registrationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>Register</span>
+                  <Icon name="arrowForward" size={16} />
+                  <span className="visually-hidden">
+                    for {course.title} (opens in a new tab)
+                  </span>
+                </a>
+              </div>
             </li>
           ))}
         </ol>

@@ -3,7 +3,7 @@ import './App.css';
 
 import SiteHeader from './components/SiteHeader';
 import Hero from './components/Hero';
-import FactStrip from './components/FactStrip';
+import ProofBand from './components/ProofBand';
 import About from './components/About';
 import Clients from './components/Clients';
 import Courses from './components/Courses';
@@ -20,7 +20,7 @@ export default function App() {
       <SiteHeader />
       <main id="main">
         <Hero />
-        <FactStrip />
+        <ProofBand />
         <About />
         <Clients />
         <Courses />

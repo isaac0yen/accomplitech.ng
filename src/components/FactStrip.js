@@ -24,17 +24,16 @@ export default function FactStrip() {
 
   return (
     <section className="facts" aria-label="Accomplitech in numbers">
-      {/*
-        One row at every width, icon-over-number-over-label, sized down with
-        clamp() rather than reflowed into a 2x2 grid. Same shape everywhere,
-        just smaller on a phone.
-      */}
-      <dl className="facts__list shell">
+      <dl className="facts__list">
         {facts.map((fact) => (
           <div className="facts__item" key={fact.label}>
-            <Icon name={fact.icon} size={20} className="facts__icon" />
-            <dt className="facts__value">{fact.value}</dt>
-            <dd className="facts__label">{fact.label}</dd>
+            <div className="facts__glyph" aria-hidden="true">
+              <Icon name={fact.icon} size={20} className="facts__icon" />
+            </div>
+            <div className="facts__body">
+              <dt className="facts__value">{fact.value}</dt>
+              <dd className="facts__label">{fact.label}</dd>
+            </div>
           </div>
         ))}
       </dl>

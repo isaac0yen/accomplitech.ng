@@ -11,11 +11,21 @@
 /* ------------------------------------------------------------- masthead --- */
 
 .masthead {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   background: var(--paper);
   border-bottom: 1px solid var(--rule);
+  transition: background-color 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease, color 180ms ease;
+}
+
+.masthead--transparent {
+  background: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
 }
 
 .masthead__inner {
@@ -33,6 +43,7 @@
   font-weight: 700;
   text-decoration: none;
   margin-right: auto;
+  transition: color 180ms ease, opacity 180ms ease;
 }
 
 .masthead__brand img {
@@ -50,6 +61,7 @@
   font-weight: 600;
   font-size: 0.9375rem;
   text-decoration: none;
+  transition: color 180ms ease, opacity 180ms ease;
 }
 
 .masthead__nav a:hover {
@@ -71,6 +83,34 @@
   border-radius: var(--radius);
   background: transparent;
   color: var(--ink);
+  transition: border-color 180ms ease, background-color 180ms ease,
+    color 180ms ease;
+}
+
+.masthead--transparent .masthead__brand,
+.masthead--transparent .masthead__nav a {
+  color: var(--on-dark);
+}
+
+.masthead--transparent .masthead__cta {
+  background: rgba(252, 250, 247, 0.1);
+  border-color: rgba(252, 250, 247, 0.3);
+  color: var(--on-dark);
+}
+
+.masthead--transparent .masthead__cta:hover {
+  background: rgba(252, 250, 247, 0.18);
+  border-color: rgba(252, 250, 247, 0.45);
+  color: var(--on-dark);
+}
+
+.masthead--transparent .masthead__toggle {
+  border-color: rgba(252, 250, 247, 0.35);
+  color: var(--on-dark);
+}
+
+.masthead--transparent .masthead__toggle:hover {
+  background: rgba(252, 250, 247, 0.12);
 }
 
 @media (max-width: 860px) {
@@ -87,7 +127,7 @@
 .mobile-nav {
   position: fixed;
   inset: 0;
-  top: 65px;
+  top: var(--nav-h);
   z-index: 99;
   background: var(--paper);
   overflow-y: auto;
@@ -120,34 +160,71 @@
  * plus hero height equals exactly one screen on load, mobile included.
  */
 .hero {
-  min-height: calc(100vh - var(--nav-h));
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
   display: flex;
   align-items: center;
+  overflow: clip;
+  background: var(--ink-band);
 }
 
 @supports (height: 100dvh) {
   .hero {
-    min-height: calc(100dvh - var(--nav-h));
+    min-height: 100dvh;
   }
 }
 
 .hero__inner {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: clamp(2rem, 5vh, 3rem);
-  padding-block: clamp(2rem, 6vh, 3.5rem);
+  justify-content: center;
+  padding-block: calc(var(--nav-h) + clamp(1.75rem, 5vh, 3rem)) clamp(2rem, 6vh, 3.5rem);
+}
+
+.hero__media,
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__media {
+  z-index: 0;
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero__overlay {
+  z-index: 1;
+  background: rgba(27, 20, 32, 0.6);
+}
+
+.hero__copy {
+  max-width: 42rem;
+}
+
+.hero .eyebrow,
+.hero__title {
+  color: var(--on-dark);
 }
 
 .hero__title {
   font-size: clamp(2rem, 4.6vw, 3.4rem);
-  max-width: 22ch;
+  max-width: 16ch;
 }
 
 .hero__lede {
   margin-top: 1.2rem;
-  max-width: 56ch;
+  max-width: 42ch;
   font-size: 1.0625rem;
-  color: var(--ink-soft);
+  color: var(--on-dark-soft);
 }
 
 .hero__actions {
@@ -157,78 +234,112 @@
   margin-top: 1.75rem;
 }
 
-.hero__media img {
-  width: 100%;
-  aspect-ratio: 2.6 / 1;
-  object-fit: cover;
+.hero__btn-outline {
+  border-color: rgba(252, 250, 247, 0.45);
+  color: var(--on-dark);
 }
 
-/*
- * Below this width the photo has no room to read as a photo, so it is dropped
- * rather than shown as a thin, unreadable strip -- the section still fills
- * the screen, just with the copy alone, vertically centred in the space the
- * photo would otherwise take.
- */
+.hero__btn-outline:hover:not(:disabled) {
+  background: rgba(252, 250, 247, 0.14);
+  border-color: var(--on-dark);
+  color: var(--on-dark);
+}
+
 @media (max-width: 700px) {
   .hero__inner {
     padding-block: 2rem 2.5rem;
-    gap: 1.5rem;
-  }
-
-  .hero__media {
-    display: none;
   }
 }
 
-/* ---------------------------------------------------------------- facts --- */
+/* ---------------------------------------------------------- proof band --- */
 
-.facts {
+.proof {
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   background: var(--paper-alt);
 }
 
-/*
- * A single horizontal row at every screen size. On mobile the numbers, icons
- * and gaps shrink with clamp() so all four keep fitting side by side, rather
- * than reflowing into a 2x2 grid.
- */
-.facts__list {
+.proof__inner {
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.facts {
   display: flex;
-  padding-block: clamp(1.1rem, 3vw, 1.75rem);
+  align-items: stretch;
+}
+
+.facts__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  width: 100%;
+  align-content: center;
+  background: var(--rule);
+  border: 1px solid var(--rule);
 }
 
 .facts__item {
-  flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
-  padding-inline: clamp(0.4rem, 1.5vw, 1.25rem);
-  border-left: 1px solid var(--rule);
-  text-align: center;
+  gap: 0.95rem;
+  padding: clamp(1.2rem, 2.5vw, 1.65rem);
+  background: var(--paper);
 }
 
-.facts__item:first-child {
-  border-left: none;
+.facts__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--rule);
+  background: var(--paper-alt);
+}
+
+.facts__body {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .facts__icon {
   color: var(--accent-ink);
-  font-size: clamp(16px, 3vw, 22px) !important;
 }
 
 .facts__value {
-  font-size: clamp(1.05rem, 3.6vw, 2rem);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: 700;
   color: var(--purple);
   line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 
 .facts__label {
+  margin-top: 0;
   color: var(--ink-soft);
-  font-size: clamp(0.625rem, 1.8vw, 0.875rem);
-  line-height: 1.3;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  max-width: 18ch;
+}
+
+@media (max-width: 1080px) {
+  .facts__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .facts__list {
+    grid-template-columns: 1fr;
+    padding-block: 0.25rem;
+  }
+
+  .facts__item {
+    padding: 1.1rem 1rem;
+  }
 }
 
 /* ----------------------------------------------------------------- about --- */
@@ -314,29 +425,66 @@
 }
 
 .clients__row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.25rem 1.75rem;
   align-items: center;
-  gap: clamp(2rem, 4vw, 3.5rem);
+  flex: 1 1 28rem;
 }
 
-.clients__row li {
-  flex: none;
+.clients__row li:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.clients__row li:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.clients__row li:nth-child(3) {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.clients__row li:nth-child(4) {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.clients__row li:nth-child(5) {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  justify-self: start;
 }
 
 .clients__row img {
-  height: 64px;
   width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 72px;
   object-fit: contain;
 }
 
-@media (max-width: 640px) {
+.clients__row li:nth-child(5) img {
+  max-height: 48px;
+  max-width: 220px;
+}
+
+@media (max-width: 860px) {
   .clients__row {
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+    flex-basis: 100%;
   }
 
-  .clients__row img {
-    height: 44px;
+  .clients__row li:nth-child(n) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .clients__row li:nth-child(5) {
+    grid-column: 1 / -1;
   }
 }
 
@@ -387,44 +535,50 @@
 .course {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
+  height: 100%;
+  padding: 1.4rem 1.5rem 1.5rem;
   border: 1px solid var(--rule-strong);
   border-radius: var(--radius);
   background: var(--paper);
 }
 
+.course__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
 .course__title {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
 }
 
 .course__summary {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  flex: 1;
+  margin-top: 0.55rem;
+  font-size: 0.95rem;
 }
 
 .tools {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.35rem 0.85rem;
   margin-top: 0.9rem;
 }
 
 .tools li {
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--ink-soft);
 }
 
 .course__meta {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 1.25rem;
   padding-top: 1.1rem;
   border-top: 1px solid var(--rule);
+}
+
+.course__meta > div {
+  min-width: 0;
 }
 
 .course__meta dt {
@@ -440,13 +594,22 @@
   font-size: 0.9rem;
 }
 
+.course__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.25rem;
+}
+
 .course__price {
   color: var(--ink);
   font-weight: 700;
+  max-width: none;
+  white-space: normal;
+  text-wrap: pretty;
 }
 
 .course__action {
-  margin-top: 1.1rem;
   color: var(--purple);
   align-self: flex-start;
 }
@@ -484,12 +647,17 @@
   .courses__grid {
     grid-template-columns: 1fr;
   }
+
+  .course__meta {
+    grid-template-columns: 1fr;
+  }
 }
 
 .corporate {
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
   gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
   margin-top: 2.5rem;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--ink);
@@ -764,7 +932,7 @@
 .site-footer {
   border-top: 1px solid var(--rule);
   background: var(--paper);
-  padding-block: 2.5rem 1.5rem;
+  padding-block: 3rem 1.75rem;
 }
 
 .site-footer__inner {

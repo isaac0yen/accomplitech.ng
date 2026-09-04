@@ -78,7 +78,7 @@ export const courses = [
     id: 'data-analysis',
     title: 'Data Analysis',
     summary:
-      'The full analytics stack, from spreadsheets through to scripting. The longest track we run, and the one most people come to us for.',
+      'For people who work with numbers in Excel and want to go further. You leave able to clean data, build reports, and write simple scripts.',
     tools: ['Excel', 'Power BI', 'SQL', 'Python'],
     duration: '3 or 4 months',
     price: '$150 for 3 months · $200 for 4 months',
@@ -87,7 +87,7 @@ export const courses = [
     id: 'ui-ux',
     title: 'UI/UX Design',
     summary:
-      'Interface and interaction design: research, wireframes, prototypes, and how to hand work over to developers.',
+      'For people who want to design screens that others can actually use. You leave with research notes, wireframes, and a Figma prototype.',
     tools: ['Figma', 'Prototyping', 'User research'],
     duration: '3 months',
     price: '$150',
@@ -96,7 +96,7 @@ export const courses = [
     id: 'web-development',
     title: 'Web Development',
     summary:
-      'Front-end and back-end fundamentals, building responsive sites that work on the devices your users actually have.',
+      'For people starting from HTML. You leave able to build a working website and connect it to real data.',
     tools: ['HTML & CSS', 'JavaScript', 'APIs & databases'],
     duration: '3 months',
     price: '$150',
@@ -105,7 +105,7 @@ export const courses = [
     id: 'graphics-design',
     title: 'Graphics Design',
     summary:
-      'Layout, type and colour, worked through enough briefs to leave with a portfolio you can show a client.',
+      'For people who need flyers, social posts and brand work. You leave with a small portfolio you can show a client.',
     tools: ['Layout', 'Typography', 'Brand assets'],
     duration: '3 months',
     price: '$150',
@@ -114,7 +114,7 @@ export const courses = [
     id: 'cybersecurity',
     title: 'Cybersecurity',
     summary:
-      'Protecting data and preventing breaches: the principles, the common failure modes, and the practices that catch them.',
+      'For people responsible for keeping systems and data safe. You leave knowing common attacks and how teams respond.',
     tools: ['Threat models', 'Access control', 'Incident response'],
     duration: '3 months',
     price: '$250',

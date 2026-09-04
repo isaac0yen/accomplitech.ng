@@ -13,12 +13,22 @@ import { nav } from '../config/site.config';
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [atTop, setAtTop] = useState(true);
   const triggerRef = useRef(null);
   const panelRef = useRef(null);
 
   const close = useCallback(() => {
     setOpen(false);
     triggerRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 16);
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
@@ -40,7 +50,7 @@ export default function SiteHeader() {
   }, [open, close]);
 
   return (
-    <header className="masthead">
+    <header className={`masthead${atTop && !open ? ' masthead--transparent' : ''}`}>
       <div className="masthead__inner shell">
         <a className="masthead__brand" href="#top">
           <img
